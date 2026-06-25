@@ -1,0 +1,30 @@
+.nav-link{
+    margin-left: 40px;
+    padding: 2px;
+}
+html,
+body {
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.btn {
+  background-color: rgb(56, 126, 209);
+  border-color: rgb(56, 126, 209);
+  color: white;
+  font-size: 19.2px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 3px;
+  
+}
+
+.btn:hover {
+  background-color: black;
+  border-color: black;
+  color: white;
+}
