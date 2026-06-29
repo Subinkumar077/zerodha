@@ -5,8 +5,8 @@ const PricingPage = () => {
   return (
     <div>
       <Hero />
-      <OpenAccount />
       <Brokerage />
+      <OpenAccount />
     </div>
   )
 }
