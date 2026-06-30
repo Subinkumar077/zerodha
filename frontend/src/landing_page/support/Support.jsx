@@ -1,8 +1,12 @@
-
+import Hero from "./Hero"
+import SupportAccordion from "./SupportAccordion"
 
 const Support = () => {
   return (
-    <div>Support</div>
+    <div>
+      <Hero />
+      <SupportAccordion />
+    </div>
   )
 }
 
