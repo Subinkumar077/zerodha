@@ -1,7 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-
+import bodyParser from "body-parser";
+import cors from "cors"
 import HoldingModel from "./models/HoldingModels.js";
 import PositionModel from "./models/PositionModels.js";
 
@@ -11,6 +12,9 @@ const app = express();
 
 const PORT = process.env.PORT || 3002;
 const MONGO_URL = process.env.MONGO_URL;
+
+app.use(cors());
+app.use(bodyParser.json());
 
 // Connect MongoDB
 mongoose
@@ -183,6 +187,18 @@ app.get("/addPositions", async (req, res) => {
 
 app.get("/", (req, res) => {
     res.send("Backend is running...");
+});
+
+// ----------------- Holdings -------------------------
+app.get("/allHoldings", async (req, res) => {
+    let allHoldings = await HoldingModel.find({});
+    res.json(allHoldings);
+});
+
+// ----------------- Positions -------------------------
+app.get("/allPositions", async (req, res) => {
+    let allPositions = await PositionModel.find({});
+    res.json(allPositions);
 });
 
 // -------------------- Start Server --------------------
