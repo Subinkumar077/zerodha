@@ -1,5 +1,8 @@
 # Zerodha 
 
+**[Project Overview Video](https://youtu.be/rbR2rZqGqhI)** - This video is a complete overview of this project.
+
+
 A comprehensive full-stack web application that replicates the core functionalities of the Zerodha trading platform. This project is divided into three main components: a user-facing frontend, an interactive trading dashboard, and a robust backend API.
 
 ## 🚀 Project Architecture
