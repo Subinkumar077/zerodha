@@ -110,7 +110,7 @@ const Menu = () => {
           <div className="profile-dropdown">
             <p>My Profile</p>
             <p>Settings</p>
-            <p>Logout</p>
+            <p onClick={() => window.location.href = "http://localhost:5173/"} style={{ cursor: "pointer" }}>Logout</p>
           </div>
         )}
       </div>
