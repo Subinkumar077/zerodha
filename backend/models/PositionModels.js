@@ -1,6 +1,6 @@
 import { model } from "mongoose";
-import { PositionSchemas } from "../schemas/PositionSchemas.js";
+import PositionSchema from "../schemas/PositionSchemas.js";
 
-const PosotionModel = model("Holding", PositionSchemas);
+const PositionModel = model("Position", PositionSchema);
 
-export default PosotionModel;
+export default PositionModel;

@@ -1,24 +1,28 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import HoldingModel from "../backend/models/HoldingModels.js";
+
+import HoldingModel from "./models/HoldingModels.js";
+import PositionModel from "./models/PositionModels.js";
 
 dotenv.config();
 
 const app = express();
 
 const PORT = process.env.PORT || 3002;
-const url = process.env.MONGO_URL;
+const MONGO_URL = process.env.MONGO_URL;
 
-// Connect Database
+// Connect MongoDB
 mongoose
-    .connect(url)
-    .then(() => console.log("MongoDB Connected"))
+    .connect(MONGO_URL)
+    .then(() => console.log("MongoDB Connected Successfully"))
     .catch((err) => console.log(err));
+
+// -------------------- Add Holdings --------------------
 
 app.get("/addHoldings", async (req, res) => {
     try {
-        const tempHolding = [
+        const tempHoldings = [
             {
                 name: "BHARTIARTL",
                 qty: 2,
@@ -130,15 +134,59 @@ app.get("/addHoldings", async (req, res) => {
             },
         ];
 
-        await HoldingModel.insertMany(tempHolding);
+        await HoldingModel.insertMany(tempHoldings);
 
-        res.send("Holdings added successfully!");
+        res.send("Holdings Added Successfully!");
     } catch (err) {
         console.error(err);
-        res.status(500).send("Error adding holdings");
+        res.status(500).send("Error Adding Holdings");
     }
 });
 
+// -------------------- Add Positions --------------------
+
+app.get("/addPositions", async (req, res) => {
+    try {
+        const tempPositions = [
+            {
+                product: "CNC",
+                name: "EVEREADY",
+                qty: 2,
+                avg: 316.27,
+                price: 312.35,
+                net: "+0.58%",
+                day: "-1.24%",
+                isLoss: true,
+            },
+            {
+                product: "CNC",
+                name: "JUBLFOOD",
+                qty: 1,
+                avg: 3124.75,
+                price: 3082.65,
+                net: "+10.04%",
+                day: "-1.35%",
+                isLoss: true,
+            },
+        ];
+
+        await PositionModel.insertMany(tempPositions);
+
+        res.send("Positions Added Successfully!");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error Adding Positions");
+    }
+});
+
+// -------------------- Home Route --------------------
+
+app.get("/", (req, res) => {
+    res.send("Backend is running...");
+});
+
+// -------------------- Start Server --------------------
+
 app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });

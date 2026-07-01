@@ -7,4 +7,4 @@ const OrderSchemas = new Schema({
     isDown: Boolean,
 })
 
-modules.exports = { OrderSchemas }    
+export default OrderSchemas;   

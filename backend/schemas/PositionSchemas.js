@@ -1,6 +1,7 @@
-import { Schema } from "mongoose"
+import { Schema } from "mongoose";
 
-const PositionSchemas = new Schema({
+const PositionSchema = new Schema({
+    product: String,
     name: String,
     qty: Number,
     avg: Number,
@@ -8,6 +9,6 @@ const PositionSchemas = new Schema({
     net: String,
     day: String,
     isLoss: Boolean,
-})
+});
 
-modules.exports = { PositionSchemas }    
+export default PositionSchema;
