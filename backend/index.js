@@ -1,10 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import bodyParser from "body-parser";
-import cors from "cors"
+import cors from "cors";
+import cookieParser from "cookie-parser";
+
 import HoldingModel from "./models/HoldingModels.js";
 import PositionModel from "./models/PositionModels.js";
+import authRoute from "./Routes/AuthRoute.js";
 
 dotenv.config();
 
@@ -13,14 +15,36 @@ const app = express();
 const PORT = process.env.PORT || 3002;
 const MONGO_URL = process.env.MONGO_URL;
 
-app.use(cors());
-app.use(bodyParser.json());
+// -------------------- Middlewares --------------------
 
-// Connect MongoDB
+app.use(
+    cors({
+        origin: ["http://localhost:3000", "http://localhost:5173"],
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true,
+    })
+);
+
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// -------------------- MongoDB Connection --------------------
+
 mongoose
     .connect(MONGO_URL)
     .then(() => console.log("MongoDB Connected Successfully"))
     .catch((err) => console.log(err));
+
+// -------------------- Authentication Routes --------------------
+
+app.use("/", authRoute);
+
+// -------------------- Home Route --------------------
+
+app.get("/", (req, res) => {
+    res.send("Backend is running...");
+});
 
 // -------------------- Add Holdings --------------------
 
@@ -183,22 +207,26 @@ app.get("/addPositions", async (req, res) => {
     }
 });
 
-// -------------------- Home Route --------------------
+// -------------------- Get Holdings --------------------
 
-app.get("/", (req, res) => {
-    res.send("Backend is running...");
-});
-
-// ----------------- Holdings -------------------------
 app.get("/allHoldings", async (req, res) => {
-    let allHoldings = await HoldingModel.find({});
-    res.json(allHoldings);
+    try {
+        const allHoldings = await HoldingModel.find({});
+        res.json(allHoldings);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
-// ----------------- Positions -------------------------
+// -------------------- Get Positions --------------------
+
 app.get("/allPositions", async (req, res) => {
-    let allPositions = await PositionModel.find({});
-    res.json(allPositions);
+    try {
+        const allPositions = await PositionModel.find({});
+        res.json(allPositions);
+    } catch (err) {
+        res.status(500).json(err);
+    }
 });
 
 // -------------------- Start Server --------------------
